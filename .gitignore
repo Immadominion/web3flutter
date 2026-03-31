@@ -38,4 +38,14 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# agent/AI config files
+CLAUDE.md
+AGENTS.md
+first-prompt.template.md
+
+# social media / branding assets (not part of the app)
+/x-banner.png
+/x-pfp-4k.jpg
+/logo.png
 next-env.d.ts

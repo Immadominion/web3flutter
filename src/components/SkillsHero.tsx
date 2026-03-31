@@ -1,0 +1,186 @@
+"use client";
+
+import { useCallback, useRef, useState } from "react";
+import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
+import { Check, Copy, Download, FileText } from "lucide-react";
+import FadeIn from "./FadeIn";
+
+const PREVIEW_CONTENT = `# Web3 Flutter Development — Agent Skill File
+# Copy this file into your project as SKILL.md
+
+---
+description: "Complete guide for building Web3 applications 
+  with Flutter on Solana and other blockchains."
+---
+
+## Package Ecosystem Map
+
+### Core Solana Packages
+
+| Package          | Purpose                              |
+|------------------|--------------------------------------|
+| solana           | Full Solana SDK — keypairs, tx, RPC  |
+| dartus           | Borsh serialization for Dart         |
+| coral_xyz        | Anchor framework client              |
+
+### When to Use What
+
+\`\`\`
+Need to connect to Solana?
+├── Yes → Use \`solana\` package
+│   ├── Mobile wallet signing? → \`solana_mobile_client\`
+│   ├── Anchor programs? → \`coral_xyz\`
+└── No, EVM chains → \`web3dart\`
+\`\`\`
+
+### 1. RPC Client — Never use public mainnet RPC in prod
+### 3. PDAs — Seeds must EXACTLY match on-chain program
+### 4. Tokens — Wallets don't hold tokens; they own accounts
+### 5. Commitment — Use \`confirmed\` for UI, \`finalized\` for final money movement
+
+## Common Errors + Fixes (table)
+## Architecture Patterns
+## Quick Reference — SOL conversions, RPC methods
+## Program IDs you'll use often
+## Links to 8 deep-dive skill files...`;
+
+// No wave path needed here anymore
+
+export default function SkillsHero() {
+    const [copied, setCopied] = useState(false);
+    const containerRef = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"],
+    });
+
+    // Start the transition when DocsSection starts covering it
+    const transitionProgress = useTransform(scrollYProgress, [0.5, 1], [0, 1]);
+    const textY = useTransform(scrollYProgress, [0, 0.5], ["0%", "-65%"]);
+
+    // Sticky upper layer recedes as DocsSection slides over
+    const contentScale = useTransform(transitionProgress, [0, 1], [1, 0.9]);
+    const contentY = useTransform(transitionProgress, [0, 1], ["0px", "-40px"]);
+    const contentBlur = useTransform(transitionProgress, [0, 1], [0, 4]);
+    const contentBrightness = useTransform(transitionProgress, [0, 1], [1, 0.5]);
+    const contentFilter = useMotionTemplate`blur(${contentBlur}px) brightness(${contentBrightness})`;
+
+    const headerY = useTransform(transitionProgress, [0, 0.8], ["0px", "-150px"]);
+    const headerOpacity = useTransform(transitionProgress, [0, 0.6], [1, 0]);
+
+    const boxY = useTransform(transitionProgress, [0, 0.8], ["0px", "150px"]);
+    const boxOpacity = useTransform(transitionProgress, [0, 0.6], [1, 0]);
+
+    const handleCopy = useCallback(async () => {
+        try {
+            const response = await fetch("/skills.md");
+            const text = await response.text();
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch {
+            handleDownload();
+        }
+    }, []);
+
+    const handleDownload = useCallback(() => {
+        const link = document.createElement("a");
+        link.href = "/skills.md";
+        link.download = "web3-flutter-skills.md";
+        link.click();
+    }, []);
+
+    return (
+        <section
+            ref={containerRef}
+            id="skills"
+            className="relative h-[320vh] bg-black pointer-events-none z-10"
+        >
+            <div className="sticky top-0 z-0 h-screen w-full overflow-hidden pointer-events-none">
+                {/* Content layer */}
+                <motion.div
+                    className="relative z-10 flex h-full w-full flex-col items-center justify-center"
+                    style={{ y: contentY, scale: contentScale, filter: contentFilter, transformOrigin: "center center" }}
+                >
+                    <div className="relative mx-auto w-full max-w-5xl px-6">
+                        <motion.div style={{ y: headerY, opacity: headerOpacity }} className="text-center sm:mb-12 mb-10 w-full flex-shrink-0">
+                            <FadeIn>
+                                <p className="spaced-text mb-4 text-xs uppercase text-accent font-bold tracking-widest">
+                                    The Skill File
+                                </p>
+                                <h2
+                                    className="mb-4 text-4xl font-bold md:text-6xl text-foreground"
+                                    style={{ fontFamily: "var(--font-heading), sans-serif" }}
+                                >
+                                    One file.{" "}
+                                    <span className="gradient-text italic opacity-90" style={{ fontFamily: "Georgia, serif" }}>
+                                        Complete knowledge.
+                                    </span>
+                                </h2>
+                                <p className="mx-auto max-w-2xl text-lg text-foreground/70" style={{ fontFamily: "var(--font-geist-sans)" }}>
+                                    Copy this into your project and your AI assistant instantly knows
+                                    how to build Web3 with Flutter, every package, every pattern,
+                                    every pitfall.
+                                </p>
+                            </FadeIn>
+                        </motion.div>
+
+                        <motion.div style={{ y: boxY, opacity: boxOpacity }} className="mx-auto max-w-5xl w-full origin-bottom flex-shrink-0 pointer-events-auto">
+                            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[#0a0a0a] shadow-[0_40px_100px_rgba(0,0,0,0.8)] transition-shadow duration-500">
+                                <div className="flex items-center justify-between gap-4 border-b border-white/5 bg-white/5 px-5 py-4 sm:px-6">
+                                    <div className="flex min-w-0 items-center gap-3">
+                                        <FileText size={18} className="text-accent" />
+                                        <span className="truncate font-mono text-sm text-foreground/70 font-semibold tracking-wide">
+                                            skills.md
+                                        </span>
+                                        <span className="rounded-full border border-accent/30 bg-accent/20 px-3 py-1 text-[10px] font-black tracking-widest uppercase text-accent">
+                                            Agent Ready
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={handleDownload}
+                                            className="flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-foreground/70 transition-all hover:bg-white/10 hover:text-foreground"
+                                        >
+                                            <Download size={14} />
+                                            <span className="hidden sm:inline">Download</span>
+                                        </button>
+                                        <button
+                                            onClick={handleCopy}
+                                            className={`flex items-center gap-2 rounded-lg px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all ${copied
+                                                ? "bg-accent-secondary/20 text-accent-secondary"
+                                                : "bg-accent text-background hover:bg-accent/90"
+                                                }`}
+                                        >
+                                            {copied ? (
+                                                <>
+                                                    <Check size={14} />
+                                                    Copied!
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Copy size={14} />
+                                                    Copy
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Custom scroll logic driven by scrollYProgress to prevent scrolling bugs */}
+                                <div className="h-[28rem] relative overflow-hidden bg-black border-t border-black pointer-events-auto cursor-default">
+                                    <motion.pre
+                                        style={{ y: textY, fontFamily: "var(--font-geist-mono), monospace", background: "black", border: "none", borderRadius: 0 }}
+                                        className="p-8 text-sm absolute w-full leading-loose text-white/80 font-medium"
+                                    >
+                                        <code>{PREVIEW_CONTENT}</code>
+                                    </motion.pre>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+}

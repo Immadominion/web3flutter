@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# web3flutterhq
 
-## Getting Started
+The ecosystem hub for Flutter × Web3 development on Solana and beyond.
 
-First, run the development server:
+## What This Is
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Website** — A professionally designed landing page for Flutter × Web3 development
+- **Skills File** — A comprehensive `skills.md` that AI agents can use to correctly build Web3 Flutter apps
+- **Documentation** — Deep-dive guides that explain not just HOW but WHY things work (and break)
+
+## Project Structure
+
+```
+web3flutter/
+├── public/
+│   └── skills.md              # THE skill file — copyable from the website
+├── docs/
+│   ├── WRITING_STYLE.md       # Documentation writing style guide
+│   └── skills/
+│       ├── solana-package.md  # Solana SDK deep dive
+│       ├── dartus-borsh.md    # Borsh serialization guide
+│       ├── coral-anchor.md    # Anchor framework client
+│       ├── solana-mobile.md   # Solana Mobile Stack
+│       ├── token-ops.md       # SPL Token operations
+│       ├── nft-dev.md         # NFT development
+│       ├── defi-patterns.md   # DeFi integration patterns
+│       └── wallet-ux.md       # Wallet UX patterns
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx         # Root layout
+│   │   ├── page.tsx           # Landing page
+│   │   └── globals.css        # Design system tokens
+│   └── components/
+│       ├── Navbar.tsx          # Fixed navigation
+│       ├── Hero.tsx            # Hero with copy CTA
+│       ├── MarqueeSection.tsx  # Scrolling text marquee
+│       ├── SkillsHero.tsx     # Skills file preview + copy
+│       ├── EcosystemMap.tsx   # Package decision tree
+│       ├── DocsSection.tsx    # Documentation cards
+│       └── Footer.tsx         # Footer with links
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router) |
+| Styling | Tailwind CSS v4 |
+| Animations | Framer Motion |
+| Fonts | Space Grotesk + JetBrains Mono |
+| Icons | Lucide React |
+| Docs Format | Markdown (MDX-ready) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development
 
-## Learn More
+```bash
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # Production build
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Design Philosophy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Inspired by:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **[anubi.io](https://anubi.io)** — Elegant layout, spaced typography, smooth scroll, project showcases
+- **[joinflowparty.com](https://www.joinflowparty.com)** — Bold community energy, marquee text, vibrant 3D elements
 
-## Deploy on Vercel
+Applied with:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Solana color palette (purple `#9945FF` / green `#14F195`) on deep dark backgrounds
+- Grid background patterns with floating gradient orbs
+- Parallax scroll effects and intersection-triggered animations
+- Typography: Space Grotesk for headings, JetBrains Mono for code
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Assets Needed
+
+- [ ] Rive animation files for interactive elements (fluffy Dash mascot, loading states)
+- [ ] OG image for social media sharing (1200x630)
+- [ ] Favicon set (16, 32, 180, 192, 512)
+
+## Contributing Docs
+
+All documentation must follow [docs/WRITING_STYLE.md](docs/WRITING_STYLE.md). Key rules:
+
+- Every code example must compile
+- Explain WHY, not just HOW
+- Include common mistakes table
+- Use consistent callout types (CRITICAL, GOTCHA, WHY THIS MATTERS)
+
+## Links
+
+- X: [@web3flutterhq](https://x.com/web3flutterhq)
+- Skills file: [public/skills.md](public/skills.md)
