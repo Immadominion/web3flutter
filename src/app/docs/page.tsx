@@ -38,6 +38,16 @@ const DOC_MANIFEST: DocManifestEntry[] = [
     { slug: "nft-dev", title: "NFT Development", description: "Mint, transfer, and display NFTs using Metaplex and compressed NFTs.", category: "Tokens & NFTs" },
     { slug: "defi-patterns", title: "DeFi Patterns", description: "Swaps, staking, and liquidity provision via Jupiter and native programs.", category: "Patterns" },
     { slug: "wallet-ux", title: "Wallet UX", description: "Connection flows, signing UI, and error handling patterns.", category: "Patterns" },
+    {
+        slug: "dartus", title: "Dartus", description: "Walrus SDK for Flutter — HTTP gateways, storage nodes, Sui, and native BLS layers.", category: "Storage",
+        sections: [
+            { slug: "walrus-mental-model", title: "Walrus Mental Model" },
+            { slug: "architecture", title: "Architecture" },
+            { slug: "app-flows", title: "App Flows" },
+            { slug: "native-layers-and-bls", title: "Native Layers & BLS" },
+        ],
+    },
+    { slug: "bls-dart", title: "bls_dart", description: "Native BLS12-381 signatures for Walrus certification and Sui-flavored verification.", category: "Storage" },
 ];
 
 async function readMd(filePath: string, fallbackTitle: string): Promise<string> {
