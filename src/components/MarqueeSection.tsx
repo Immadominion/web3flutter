@@ -103,7 +103,7 @@ const AppCard = ({ name }: { name: string }) => {
 
 export default function MarqueeSection() {
     return (
-        <section className="relative w-full pt-[15vh] pb-[10vh] overflow-hidden bg-black flex flex-col items-center">
+        <section id="ecosystem" className="relative w-full pt-[15vh] pb-[10vh] overflow-hidden bg-black flex flex-col items-center">
 
             {/* Elegant section header overlaying the marquee to provide editorial context */}
             <div className="absolute top-10 left-0 w-full flex justify-center z-20 pointer-events-none opacity-80">

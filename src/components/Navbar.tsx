@@ -7,8 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Copy, BookOpen, X } from "lucide-react";
 
 const navLinks = [
-    { href: "#skills", label: "Skills", desc: "Let AI build on Solana" },
     { href: "#ecosystem", label: "Ecosystem", desc: "The full Flutter × Web3 map" },
+    { href: "#skills", label: "Skills", desc: "Let AI build on Solana" },
     { href: "#docs", label: "Docs", desc: "Learn Flutter on Solana" },
 ];
 
@@ -65,6 +65,16 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isMobileOpen]);
+
     const handleQuickCopy = useCallback(async () => {
         try {
             const response = await fetch("/skills.md");
@@ -81,7 +91,7 @@ export default function Navbar() {
         <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pointer-events-none`}
         >
-            <div className="max-w-7xl mx-auto px-42 h-16 flex items-center justify-between pointer-events-auto">
+            <div className="relative z-20 max-w-7xl mx-auto px-4 md:px-42 h-16 flex items-center justify-between pointer-events-auto">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
                     <Image
@@ -240,57 +250,106 @@ export default function Navbar() {
                 >
                     <motion.div
                         animate={isMobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                        className="w-5 h-px bg-foreground"
+                        className={`w-5 h-px transition-colors ${isMobileOpen ? 'bg-background' : 'bg-foreground'}`}
                     />
                     <motion.div
                         animate={isMobileOpen ? { opacity: 0 } : { opacity: 1 }}
-                        className="w-5 h-px bg-foreground"
+                        className={`w-5 h-px transition-colors ${isMobileOpen ? 'bg-background' : 'bg-foreground'}`}
                     />
                     <motion.div
                         animate={isMobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                        className="w-5 h-px bg-foreground"
+                        className={`w-5 h-px transition-colors ${isMobileOpen ? 'bg-background' : 'bg-foreground'}`}
                     />
                 </button>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Full-Screen Menu */}
             <AnimatePresence>
                 {isMobileOpen && (
                     <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="md:hidden bg-surface border-b border-border overflow-hidden"
+                        initial={{ clipPath: "inset(0 0 100% 0)" }}
+                        animate={{ clipPath: "inset(0 0 0% 0)" }}
+                        exit={{ clipPath: "inset(0 0 100% 0)" }}
+                        transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
+                        className="fixed inset-0 z-10 bg-accent md:hidden pointer-events-auto flex flex-col"
                     >
-                        <div className="px-6 py-4 flex flex-col gap-4">
-                            {navLinks.map((link) => (
-                                <a
-                                    key={link.href}
-                                    href={link.href}
-                                    onClick={() => setIsMobileOpen(false)}
-                                    className="text-sm text-muted hover:text-foreground transition-colors spaced-text"
-                                >
-                                    {link.label}
-                                </a>
-                            ))}
-                            <div className="flex flex-col gap-3 pt-3 border-t border-border">
+                        {/* Nav links — centered vertically */}
+                        <div className="flex-1 flex flex-col justify-center px-8">
+                            <nav className="flex flex-col">
+                                {navLinks.map((link, i) => (
+                                    <motion.a
+                                        key={link.href}
+                                        href={link.href}
+                                        onClick={() => setIsMobileOpen(false)}
+                                        initial={{ x: -40, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        exit={{ x: 40, opacity: 0 }}
+                                        transition={{
+                                            delay: 0.15 + i * 0.08,
+                                            duration: 0.5,
+                                            ease: [0.25, 1, 0.5, 1],
+                                        }}
+                                        className="group py-5 border-b border-background/10 last:border-0"
+                                    >
+                                        <span
+                                            className="block text-[2.5rem] font-black text-background uppercase tracking-wider leading-tight"
+                                            style={{ fontFamily: 'var(--font-heading), sans-serif' }}
+                                        >
+                                            {link.label}
+                                        </span>
+                                        <span
+                                            className="block text-sm text-background/40 mt-0.5 italic"
+                                            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                                        >
+                                            {link.desc}
+                                        </span>
+                                    </motion.a>
+                                ))}
+                            </nav>
+                        </div>
+
+                        {/* Bottom: CTAs + Social */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ delay: 0.35, duration: 0.4 }}
+                            className="px-8 pb-10"
+                        >
+                            <div className="flex gap-3 mb-6">
                                 <button
-                                    onClick={handleQuickCopy}
-                                    className="flex items-center gap-2 px-4 py-3 rounded-xl bg-accent text-background text-sm font-bold"
+                                    onClick={() => { handleQuickCopy(); setIsMobileOpen(false); }}
+                                    className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl bg-background text-accent text-sm font-bold uppercase tracking-wider"
+                                    style={{ fontFamily: 'var(--font-heading), sans-serif' }}
                                 >
                                     <Copy size={14} />
-                                    {copied ? "Copied!" : "Copy Skills.md"}
+                                    {copied ? "Copied!" : "Copy Skills"}
                                 </button>
                                 <a
                                     href="#docs"
                                     onClick={() => setIsMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 rounded-xl border border-foreground/20 text-foreground text-sm font-bold"
+                                    className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl border-2 border-background text-background text-sm font-bold uppercase tracking-wider"
+                                    style={{ fontFamily: 'var(--font-heading), sans-serif' }}
                                 >
                                     <BookOpen size={14} />
-                                    Get Started
+                                    Docs
                                 </a>
                             </div>
-                        </div>
+
+                            {/* Social */}
+                            <div className="flex items-center justify-center gap-6">
+                                <a
+                                    href="https://x.com/web3flutterhq"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-background/40 hover:text-background transition-colors"
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>

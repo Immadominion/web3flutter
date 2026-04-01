@@ -33,7 +33,7 @@ export default function Hero() {
 
                 {/* Content layer */}
                 <div
-                    className="relative z-10 w-full mx-auto px-4 sm:px-8 md:px-10 lg:px-12 pt-20 sm:pt-24 pb-10 pointer-events-none"
+                    className="relative z-10 w-full mx-auto px-3 sm:px-8 md:px-10 lg:px-12 pt-20 sm:pt-24 pb-10 pointer-events-none"
                 >
                     <div className="flex flex-col items-center">
                         {/* Typography stack: Build / Web3 / Flutter */}
@@ -42,7 +42,7 @@ export default function Hero() {
                             <FadeIn delay={0.1} y={20}>
                                 <div className="w-full flex justify-start">
                                     <p
-                                        className="text-5xl sm:text-6xl md:text-7xl font-semibold text-foreground tracking-wide uppercase"
+                                        className="text-6xl sm:text-7xl md:text-7xl font-semibold text-foreground tracking-wide uppercase"
                                         style={{ fontFamily: 'var(--font-heading), sans-serif' }}
                                     >
                                         Build
@@ -57,7 +57,7 @@ export default function Hero() {
                              */}
                                 <div className="relative inline-block">
                                     <h1
-                                        className="relative text-[7.6rem] sm:text-[10.5rem] md:text-[15rem] lg:text-[25rem] xl:text-[40rem] leading-[0.8] tracking-[-0.06em] text-foreground uppercase"
+                                        className="relative text-[13rem] sm:text-[14rem] md:text-[15rem] lg:text-[25rem] xl:text-[40rem] leading-[0.8] tracking-[-0.06em] text-foreground uppercase"
                                         style={{
                                             fontFamily: 'var(--font-display), sans-serif',
                                             WebkitTextStroke: '1.5px currentColor',
@@ -84,7 +84,7 @@ export default function Hero() {
                             </FadeIn>
 
                             <FadeIn delay={0.4} y={20}>
-                                <div className="w-full flex justify-end items-center gap-4 mt-[-60px] sm:mt-[-80px] md:mt-[-50px] pr-2 sm:pr-8">
+                                <div className="w-full flex justify-end items-center gap-4 mt-[-30px] sm:mt-[-50px] md:mt-[-50px] pr-2 sm:pr-8">
                                     <span
                                         className="inline-block -rotate-[25deg] text-1xl sm:text-2xl md:text-[3rem] text-accent/90 lowercase"
                                         style={{ fontFamily: '"Brush Script MT", "Caveat", "Comic Sans MS", cursive' }}
@@ -92,7 +92,7 @@ export default function Hero() {
                                         with
                                     </span>
                                     <span
-                                        className="inline-block bg-accent px-6 py-2 text-lg sm:text-xl md:text-7xl font-black text-background tracking-[0.16em] uppercase"
+                                        className="inline-block bg-accent px-6 py-2 text-2xl sm:text-3xl md:text-7xl font-black text-background tracking-[0.16em] uppercase"
                                         style={{
                                             fontFamily: 'var(--font-heading), sans-serif',
                                             borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
