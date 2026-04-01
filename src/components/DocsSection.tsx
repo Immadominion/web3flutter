@@ -26,7 +26,7 @@ const DRAG_CARDS = [
         id: "client",
         tag: "CLIENT",
         title: ["NATIVE SOLANA", "CLIENT"],
-        subtitle: "DARTUS / FLUTTER",
+        subtitle: "SOLANA / FLUTTER",
         date: "LIBRARY",
         bg: "bg-[#FF3366]",
         text: "text-white",

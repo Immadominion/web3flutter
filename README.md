@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/x-pfp.png" alt="Web3 Flutter HQ" width="200" />
+</p>
+
 # web3flutterhq
 
 The ecosystem hub for Flutter × Web3 development on Solana and beyond.
@@ -5,7 +9,7 @@ The ecosystem hub for Flutter × Web3 development on Solana and beyond.
 ## What This Is
 
 - **Website** — A professionally designed landing page for Flutter × Web3 development
-- **Skills File** — A comprehensive `skills.md` that AI agents can use to correctly build Web3 Flutter apps
+- **Skills System** — An index `skills.md` that AI agents copy into their project, with deep-dive skill files served via API
 - **Documentation** — Deep-dive guides that explain not just HOW but WHY things work (and break)
 
 ## Project Structure
@@ -13,29 +17,43 @@ The ecosystem hub for Flutter × Web3 development on Solana and beyond.
 ```
 web3flutter/
 ├── public/
-│   └── skills.md              # THE skill file — copyable from the website
+│   └── skills.md              # Index skill file — copyable from the website
 ├── docs/
 │   ├── WRITING_STYLE.md       # Documentation writing style guide
-│   └── skills/
-│       ├── solana-package.md  # Solana SDK deep dive
-│       ├── dartus-borsh.md    # Borsh serialization guide
-│       ├── coral-anchor.md    # Anchor framework client
-│       ├── solana-mobile.md   # Solana Mobile Stack
-│       ├── token-ops.md       # SPL Token operations
-│       ├── nft-dev.md         # NFT development
-│       ├── defi-patterns.md   # DeFi integration patterns
-│       └── wallet-ux.md       # Wallet UX patterns
+│   ├── SKILL_AUTHORING_GUIDE.md # Guide for AI models writing skill files
+│   ├── skills/                # Bot-facing skill files (served via /api/skills/)
+│   │   ├── borsh.md
+│   │   ├── coral-xyz.md
+│   │   ├── solana-core.md
+│   │   ├── spl-token.md
+│   │   ├── transaction-building.md
+│   │   └── ...                # + more per-package skills
+│   └── guides/                # Human-facing docs (served on /docs page)
+│       ├── solana-package.md
+│       ├── borsh.md
+│       ├── coral-xyz/         # Multi-section guide
+│       │   ├── index.md
+│       │   ├── idl-basics.md
+│       │   ├── serialization.md
+│       │   ├── account-resolution.md
+│       │   └── events-and-interface.md
+│       ├── solana-mobile.md
+│       ├── token-ops.md
+│       ├── nft-dev.md
+│       ├── defi-patterns.md
+│       └── wallet-ux.md
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx         # Root layout
 │   │   ├── page.tsx           # Landing page
-│   │   └── globals.css        # Design system tokens
+│   │   ├── globals.css        # Design system tokens
+│   │   ├── api/skills/        # Raw markdown API for agent fetching
+│   │   └── docs/              # Technical docs reader page
 │   └── components/
 │       ├── Navbar.tsx          # Fixed navigation
 │       ├── Hero.tsx            # Hero with copy CTA
-│       ├── MarqueeSection.tsx  # Scrolling text marquee
+│       ├── MarqueeSection.tsx  # Ecosystem app showcase
 │       ├── SkillsHero.tsx     # Skills file preview + copy
-│       ├── EcosystemMap.tsx   # Package decision tree
 │       ├── DocsSection.tsx    # Documentation cards
 │       └── Footer.tsx         # Footer with links
 └── package.json

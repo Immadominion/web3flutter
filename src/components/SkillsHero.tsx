@@ -5,44 +5,44 @@ import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motio
 import { Check, Copy, Download, FileText } from "lucide-react";
 import FadeIn from "./FadeIn";
 
-const PREVIEW_CONTENT = `# Web3 Flutter Development — Agent Skill File
-# Copy this file into your project as SKILL.md
+const PREVIEW_CONTENT = `# Web3 Flutter — Agent Skill File
+# Copy into your project as SKILL.md or .instructions.md
 
 ---
-description: "Complete guide for building Web3 applications 
-  with Flutter on Solana and other blockchains."
+description: "Index skill file for Web3 Flutter development 
+  on Solana. References deep-dive skill files."
+globs: "**/*.dart"
 ---
 
-## Package Ecosystem Map
+## Deep-Dive Skill Files
 
-### Core Solana Packages
+| Skill            | URL                                          |
+|------------------|----------------------------------------------|
+| Solana Package   | web3flutter.dev/api/skills/solana-package     |
+| Borsh            | web3flutter.dev/api/skills/borsh               |
+| coral_xyz        | web3flutter.dev/api/skills/coral-xyz            |
+| Solana Mobile    | web3flutter.dev/api/skills/solana-mobile      |
+| Token Operations | web3flutter.dev/api/skills/token-ops          |
+| NFT Development  | web3flutter.dev/api/skills/nft-dev            |
+| DeFi Patterns    | web3flutter.dev/api/skills/defi-patterns      |
+| Wallet UX        | web3flutter.dev/api/skills/wallet-ux          |
 
-| Package          | Purpose                              |
-|------------------|--------------------------------------|
-| solana           | Full Solana SDK — keypairs, tx, RPC  |
-| dartus           | Borsh serialization for Dart         |
-| coral_xyz        | Anchor framework client              |
+> AGENT: Fetch only the skill URLs relevant to the task.
 
-### When to Use What
+## Decision Tree
 
 \`\`\`
-Need to connect to Solana?
-├── Yes → Use \`solana\` package
-│   ├── Mobile wallet signing? → \`solana_mobile_client\`
-│   ├── Anchor programs? → \`coral_xyz\`
-└── No, EVM chains → \`web3dart\`
+Any Solana Flutter app → \`solana\` (always needed)
+├── Anchor programs? → also \`coral_xyz\`
+├── Raw programs? → also \`borsh\`
+├── Mobile signing? → also \`solana_mobile_client\`
+└── EVM chains → \`web3dart\`
 \`\`\`
 
-### 1. RPC Client — Never use public mainnet RPC in prod
-### 3. PDAs — Seeds must EXACTLY match on-chain program
-### 4. Tokens — Wallets don't hold tokens; they own accounts
-### 5. Commitment — Use \`confirmed\` for UI, \`finalized\` for final money movement
-
+## Critical Rules
 ## Common Errors + Fixes (table)
 ## Architecture Patterns
-## Quick Reference — SOL conversions, RPC methods
-## Program IDs you'll use often
-## Links to 8 deep-dive skill files...`;
+## Program IDs you'll use often...`;
 
 // No wave path needed here anymore
 

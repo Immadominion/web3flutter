@@ -4,12 +4,12 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, BookOpen, X } from "lucide-react";
+import { Copy, BookOpen, LucideX } from "lucide-react";
 
 const navLinks = [
     { href: "#ecosystem", label: "Ecosystem", desc: "The full Flutter × Web3 map" },
     { href: "#skills", label: "Skills", desc: "Let AI build on Solana" },
-    { href: "#docs", label: "Docs", desc: "Learn Flutter on Solana" },
+    { href: "/docs", label: "Docs", desc: "Deep-dive technical guides" },
 ];
 
 function NavLink({ href, label, desc, onClick }: { href: string; label: string; desc: string; onClick: () => void }) {
@@ -155,7 +155,7 @@ export default function Navbar() {
                                             exit={{ rotate: 90, opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
-                                            <X size={20} className="text-background" />
+                                            <LucideX size={20} className="text-background" />
                                         </motion.div>
                                     ) : (
                                         <motion.div
@@ -235,7 +235,7 @@ export default function Navbar() {
                         <Copy size={14} className={`transition-transform ${copied ? 'scale-110' : 'group-hover:scale-110'}`} />
                     </button>
                     <a
-                        href="#docs"
+                        href="/docs"
                         className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:bg-foreground/90 transition-all duration-200"
                     >
                         Get Started
@@ -326,7 +326,7 @@ export default function Navbar() {
                                     {copied ? "Copied!" : "Copy Skills"}
                                 </button>
                                 <a
-                                    href="#docs"
+                                    href="/docs"
                                     onClick={() => setIsMobileOpen(false)}
                                     className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl border-2 border-background text-background text-sm font-bold uppercase tracking-wider"
                                     style={{ fontFamily: 'var(--font-heading), sans-serif' }}

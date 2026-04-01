@@ -116,12 +116,12 @@ export default function Footer() {
                             </li>
                             <li>
                                 <a
-                                    href="https://pub.dev/packages/dartus"
+                                    href="https://pub.dev/packages/borsh"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-sm text-black/60 hover:text-black transition-colors"
                                 >
-                                    dartus
+                                    borsh
                                 </a>
                             </li>
                             <li>
