@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, LucideSearch, BookOpen, ChevronRight, LucideX } from "lucide-react";
+import { ArrowLeft, LucideSearch, BookOpen, ChevronRight, LucideX, Copy, Check, Sparkles } from "lucide-react";
 
 interface DocSection {
     slug: string;
@@ -17,6 +18,7 @@ interface DocEntry {
     description: string;
     category: string;
     content: string;
+    skillSlug?: string;
     sections?: DocSection[];
 }
 
@@ -324,11 +326,13 @@ function SidebarItem({
 }
 
 /* ── Main ── */
-export default function DocsPageClient({ docs }: { docs: DocEntry[] }) {
-    const [activeSlug, setActiveSlug] = useState(docs[0]?.slug ?? "");
+export default function DocsPageClient({ docs, initialSlug }: { docs: DocEntry[]; initialSlug?: string }) {
+    const router = useRouter();
+    const [activeSlug, setActiveSlug] = useState(initialSlug ?? docs[0]?.slug ?? "");
     const [activeSection, setActiveSection] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [skillCopied, setSkillCopied] = useState(false);
 
     const categories = useMemo(() => {
         const map: Record<string, DocEntry[]> = {};
@@ -361,12 +365,24 @@ export default function DocsPageClient({ docs }: { docs: DocEntry[] }) {
     const selectDoc = (slug: string) => {
         setActiveSlug(slug);
         setActiveSection(null);
+        setSkillCopied(false);
+        router.push(`/docs/${slug}`, { scroll: false });
     };
 
     const selectSection = (slug: string, sectionSlug: string) => {
         setActiveSlug(slug);
         setActiveSection(sectionSlug);
+        setSkillCopied(false);
+        router.push(`/docs/${slug}`, { scroll: false });
     };
+
+    const handleCopySkillUrl = useCallback(async (skillSlug: string) => {
+        try {
+            await navigator.clipboard.writeText(`https://web3flutter.dev/api/skills/${skillSlug}`);
+            setSkillCopied(true);
+            setTimeout(() => setSkillCopied(false), 2000);
+        } catch { /* ignore */ }
+    }, []);
 
     return (
         <div className="min-h-screen bg-[#050505]">
@@ -608,6 +624,37 @@ export default function DocsPageClient({ docs }: { docs: DocEntry[] }) {
                                                 </>
                                             );
                                         })()}
+                                    </div>
+                                )}
+
+                                {/* Skill file CTA */}
+                                {activeDoc.skillSlug && (
+                                    <div className="mt-10 rounded-xl border border-[#E3FF00]/20 bg-[#E3FF00]/5 p-5">
+                                        <div className="flex items-start gap-3">
+                                            <Sparkles size={18} className="text-[#E3FF00] mt-0.5 flex-shrink-0" />
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-semibold text-white mb-1">
+                                                    Building with {activeDoc.title}?
+                                                </p>
+                                                <p className="text-xs text-white/40 leading-relaxed mb-3">
+                                                    Give your AI agent the full skill file — paste the link into your conversation or save it to your project.
+                                                </p>
+                                                <div className="flex items-center gap-2 flex-wrap">
+                                                    <button
+                                                        onClick={() => handleCopySkillUrl(activeDoc.skillSlug!)}
+                                                        className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all ${skillCopied
+                                                            ? "bg-green-500/20 text-green-400"
+                                                            : "bg-[#E3FF00] text-black hover:bg-[#E3FF00]/90"
+                                                            }`}
+                                                    >
+                                                        {skillCopied ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy Skill URL</>}
+                                                    </button>
+                                                    <code className="text-[10px] text-white/25 font-mono truncate">
+                                                        web3flutter.dev/api/skills/{activeDoc.skillSlug}
+                                                    </code>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
                             </motion.article>

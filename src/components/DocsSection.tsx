@@ -2,68 +2,201 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { useRouter } from "next/navigation";
 import FadeIn from "./FadeIn";
 
 const TIDE_PATH = "M 0 200 L 0 100 C 120 50, 240 50, 360 100 S 600 150, 720 100 S 960 50, 1080 100 S 1320 150, 1440 100 S 1680 50, 1800 100 S 2040 150, 2160 100 S 2400 50, 2520 100 S 2760 150, 2880 100 L 2880 200 Z";
 
 const DRAG_CARDS = [
     {
-        id: "mwa",
+        id: "solana-package",
+        slug: "solana-package",
+        tag: "CORE",
+        title: ["SOLANA", "PACKAGE"],
+        subtitle: "SOLANA SDK",
+        date: "FOUNDATION",
+        bg: "bg-[#5333FF]",
+        text: "text-white",
+        overview: "The foundational SDK — keypairs, transactions, RPC communication, and program interaction for every Solana Flutter app.",
+        objectives: [
+            "Full RPC client",
+            "Ed25519 keypairs & signing",
+            "Transaction building"
+        ]
+    },
+    {
+        id: "coral-xyz",
+        slug: "coral-xyz",
+        tag: "CORE",
+        title: ["CORAL", "XYZ"],
+        subtitle: "PROGRAM CLIENT",
+        date: "IDL-DRIVEN",
+        bg: "bg-[#FF3366]",
+        text: "text-white",
+        overview: "Universal Dart client for Solana programs — Anchor, Quasar, and Pinocchio via IDL. One SDK for every framework.",
+        objectives: [
+            "Anchor / Quasar support",
+            "IDL-based code generation",
+            "Account resolution"
+        ]
+    },
+    {
+        id: "borsh",
+        slug: "borsh",
+        tag: "CORE",
+        title: ["BORSH", "SERIALIZATION"],
+        subtitle: "BINARY FORMAT",
+        date: "CODE GEN",
+        bg: "bg-[#1a1a2e]",
+        text: "text-white",
+        overview: "Code generation and runtime types for serializing Solana on-chain data in Borsh binary format.",
+        objectives: [
+            "Builder annotations",
+            "Struct ↔ bytes roundtrip",
+            "Enum discriminators"
+        ]
+    },
+    {
+        id: "solana-mobile",
+        slug: "solana-mobile",
         tag: "MOBILE",
         title: ["MOBILE WALLET", "ADAPTER"],
         subtitle: "SOLANA MWA",
         date: "PROTOCOL",
-        bg: "bg-[#5333FF]",
+        bg: "bg-[#0d9488]",
         text: "text-white",
         overview: "A protocol specification that facilitates secure connections between mobile dApps and local wallet apps on a device.",
         objectives: [
             "Seamless native signing",
-            "No browser extensions",
-            "Secure message authorization"
+            "Seed Vault integration",
+            "dApp Store ready"
         ]
     },
     {
-        id: "client",
-        tag: "CLIENT",
-        title: ["NATIVE SOLANA", "CLIENT"],
-        subtitle: "SOLANA / FLUTTER",
-        date: "LIBRARY",
-        bg: "bg-[#FF3366]",
+        id: "token-ops",
+        slug: "token-ops",
+        tag: "TOKENS",
+        title: ["TOKEN", "OPERATIONS"],
+        subtitle: "SPL / TOKEN-2022",
+        date: "TRANSFERS",
+        bg: "bg-[#7c3aed]",
         text: "text-white",
-        overview: "Native libraries to interact directly with the Solana blockchain from Dart code.",
+        overview: "Create, transfer, and manage SPL tokens and Token-2022 extensions in Flutter.",
         objectives: [
-            "Direct RPC interactions",
-            "Cross-platform capability",
-            "Native data serialization"
+            "Mint & transfer tokens",
+            "ATA management",
+            "Token-2022 extensions"
         ]
     },
     {
-        id: "walrus",
+        id: "nft-dev",
+        slug: "nft-dev",
+        tag: "NFTs",
+        title: ["NFT", "DEVELOPMENT"],
+        subtitle: "METAPLEX",
+        date: "MINT & DISPLAY",
+        bg: "bg-[#dc2626]",
+        text: "text-white",
+        overview: "Mint, transfer, and display NFTs using Metaplex Token Metadata and compressed NFTs.",
+        objectives: [
+            "Master editions",
+            "Compressed NFTs (cNFTs)",
+            "DAS API integration"
+        ]
+    },
+    {
+        id: "defi-patterns",
+        slug: "defi-patterns",
+        tag: "DEFI",
+        title: ["DEFI", "PATTERNS"],
+        subtitle: "JUPITER / STAKING",
+        date: "SWAPS",
+        bg: "bg-[#ea580c]",
+        text: "text-white",
+        overview: "Swaps, staking, and liquidity provision via Jupiter and native programs.",
+        objectives: [
+            "Jupiter swap routing",
+            "SOL staking flows",
+            "Liquidity patterns"
+        ]
+    },
+    {
+        id: "wallet-ux",
+        slug: "wallet-ux",
+        tag: "UX",
+        title: ["WALLET", "UX"],
+        subtitle: "CONNECTION FLOWS",
+        date: "PATTERNS",
+        bg: "bg-[#111111]",
+        text: "text-white",
+        overview: "Connection flows, signing UI, and error handling patterns for great wallet UX.",
+        objectives: [
+            "Connect / disconnect flows",
+            "Signing UI states",
+            "Error recovery"
+        ]
+    },
+    {
+        id: "dartus",
+        slug: "dartus",
         tag: "STORAGE",
         title: ["DECENTRALIZED", "STORAGE"],
         subtitle: "WALRUS PROTOCOL",
         date: "NETWORK",
-        bg: "bg-[#111111]",
+        bg: "bg-[#0369a1]",
         text: "text-white",
-        overview: "A decentralized, highly scalable data storage network optimized for handling large data blobs.",
+        overview: "Walrus SDK for Flutter — HTTP gateways, storage nodes, Sui, and native BLS layers.",
         objectives: [
             "Cost-effective blob storage",
-            "High availability",
+            "BLS certification",
             "Fully decentralized"
         ]
     },
     {
-        id: "tld",
+        id: "bls-dart",
+        slug: "bls-dart",
+        tag: "CRYPTO",
+        title: ["BLS12-381", "SIGNATURES"],
+        subtitle: "BLS_DART",
+        date: "NATIVE",
+        bg: "bg-[#4338ca]",
+        text: "text-white",
+        overview: "Native BLS12-381 signatures for Walrus certification and Sui-flavored verification.",
+        objectives: [
+            "Aggregate signatures",
+            "Walrus blob certification",
+            "FFI-backed performance"
+        ]
+    },
+    {
+        id: "light-sdk",
+        slug: "light-sdk",
+        tag: "ZK",
+        title: ["ZK", "COMPRESSION"],
+        subtitle: "LIGHT PROTOCOL",
+        date: "1/1000TH COST",
+        bg: "bg-[#15803d]",
+        text: "text-white",
+        overview: "Store Solana state at 1/1000th the cost using zero-knowledge proofs to compress accounts into Merkle trees.",
+        objectives: [
+            "Compressed accounts",
+            "State tree proofs",
+            "Mobile-ready integration"
+        ]
+    },
+    {
+        id: "tld-parser",
+        slug: "tld-parser",
         tag: "IDENTITY",
         title: ["HUMAN READABLE", "IDENTITY"],
         subtitle: "ALL DOMAINS",
         date: "NAMING",
         bg: "bg-white",
         text: "text-black",
-        overview: "A decentralized naming service that issues custom Top-Level Domains (TLDs) on the blockchain.",
+        overview: "Resolve human-readable domain names to Solana wallet addresses — and back — for every TLD on the AllDomains protocol.",
         objectives: [
             "Replace complex addresses",
-            "Seamless identity management",
+            "Multi-TLD resolution",
             "Cross-dApp interoperability"
         ]
     }
@@ -72,6 +205,8 @@ const DRAG_CARDS = [
 export default function DocsSection() {
     const containerRef = useRef<HTMLElement>(null);
     const carouselRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
+    const dragStartX = useRef(0);
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -175,14 +310,23 @@ export default function DocsSection() {
                         drag="x"
                         dragConstraints={dragConstraints}
                         dragElastic={0.05}
-                        onPointerDown={() => setIsDragging(true)}
-                        onPointerUp={() => setIsDragging(false)}
+                        onPointerDown={(e) => { setIsDragging(true); dragStartX.current = e.clientX; }}
+                        onPointerUp={(e) => {
+                            setIsDragging(false);
+                            // Navigate only if it wasn't a drag (moved less than 8px)
+                            const dx = Math.abs(e.clientX - dragStartX.current);
+                            if (dx < 8) {
+                                const card = (e.target as HTMLElement).closest("[data-slug]");
+                                if (card) router.push(`/docs/${card.getAttribute("data-slug")}`);
+                            }
+                        }}
                         className="flex flex-nowrap w-fit select-none cursor-none"
                     >
                         {DRAG_CARDS.map((course, i) => (
                             <div
                                 key={course.id}
-                                className={`relative flex-shrink-0 w-[90vw] sm:w-[500px] md:w-[600px] lg:w-[650px] h-[75vh] min-h-[600px] md:min-h-[750px] p-8 sm:p-12 flex flex-col justify-between ${course.bg} ${course.text} ${i !== DRAG_CARDS.length - 1 ? (course.text.includes('text-white') ? 'border-r border-white/10' : 'border-r border-black/5') : ''}`}
+                                data-slug={course.slug}
+                                className={`relative flex-shrink-0 w-[85vw] sm:w-[420px] md:w-[480px] lg:w-[520px] h-[70vh] min-h-[520px] md:min-h-[600px] p-6 sm:p-10 flex flex-col justify-between ${course.bg} ${course.text} ${i !== DRAG_CARDS.length - 1 ? (course.text.includes('text-white') ? 'border-r border-white/10' : 'border-r border-black/5') : ''}`}
                             >
                                 <div className="flex justify-between items-start w-full">
                                     <div className="uppercase tracking-wide">
@@ -194,12 +338,12 @@ export default function DocsSection() {
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col gap-8 mt-16 sm:mt-24 mb-24 z-10 relative pointer-events-none flex-grow justify-center">
-                                    <div className="max-w-[400px]">
-                                        <p className="text-base sm:text-xl font-medium leading-relaxed opacity-95">
+                                <div className="flex flex-col gap-6 mt-10 sm:mt-16 mb-16 z-10 relative pointer-events-none flex-grow justify-center">
+                                    <div className="max-w-[360px]">
+                                        <p className="text-sm sm:text-base font-medium leading-relaxed opacity-95">
                                             {course.overview}
                                         </p>
-                                        <ul className="mt-10 space-y-4">
+                                        <ul className="mt-6 space-y-3">
                                             {course.objectives.map((obj, j) => (
                                                 <li key={j} className="flex items-center gap-4 text-sm font-medium opacity-70">
                                                     <span className="w-1.5 h-1.5 rounded-full bg-current opacity-60 flex-shrink-0" />
@@ -212,7 +356,7 @@ export default function DocsSection() {
 
                                 <div className="flex justify-between items-end w-full relative z-10 mt-auto">
                                     <h3
-                                        className="text-[12vw] sm:text-[4rem] md:text-[5rem] lg:text-[5.5rem] font-bold uppercase leading-[0.8] tracking-[-0.04em]"
+                                        className="text-[10vw] sm:text-[3rem] md:text-[3.5rem] lg:text-[4rem] font-bold uppercase leading-[0.8] tracking-[-0.04em]"
                                         style={{ fontFamily: 'var(--font-heading), sans-serif' }}
                                     >
                                         {course.title.map((line, k) => (

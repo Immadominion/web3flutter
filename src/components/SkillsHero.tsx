@@ -9,23 +9,36 @@ const PREVIEW_CONTENT = `# Web3 Flutter — Agent Skill File
 # Copy into your project as SKILL.md or .instructions.md
 
 ---
-description: "Index skill file for Web3 Flutter development 
-  on Solana. References deep-dive skill files."
+description: "Index skill file for Web3 Flutter on Solana.
+  References 16 deep-dive skill files."
 globs: "**/*.dart"
 ---
 
-## Deep-Dive Skill Files
+## Deep-Dive Skill Files (16)
 
-| Skill            | URL                                          |
-|------------------|----------------------------------------------|
-| Solana Package   | web3flutter.dev/api/skills/solana-package     |
-| Borsh            | web3flutter.dev/api/skills/borsh               |
-| coral_xyz        | web3flutter.dev/api/skills/coral-xyz            |
-| Solana Mobile    | web3flutter.dev/api/skills/solana-mobile      |
-| Token Operations | web3flutter.dev/api/skills/token-ops          |
-| NFT Development  | web3flutter.dev/api/skills/nft-dev            |
-| DeFi Patterns    | web3flutter.dev/api/skills/defi-patterns      |
-| Wallet UX        | web3flutter.dev/api/skills/wallet-ux          |
+| Skill                | URL                                              |
+|----------------------|--------------------------------------------------|
+| Solana Core SDK      | web3flutter.dev/api/skills/solana-core            |
+| Solana Package       | web3flutter.dev/api/skills/solana-package         |
+| Borsh                | web3flutter.dev/api/skills/borsh                  |
+| coral_xyz            | web3flutter.dev/api/skills/coral-xyz              |
+| Solana Mobile Client | web3flutter.dev/api/skills/solana-mobile-client   |
+| Solana Mobile Wallet | web3flutter.dev/api/skills/solana-mobile-wallet   |
+| Solana Seed Vault    | web3flutter.dev/api/skills/solana-seed-vault      |
+| SPL Token            | web3flutter.dev/api/skills/spl-token              |
+| Metaplex NFT         | web3flutter.dev/api/skills/metaplex-nft           |
+| Token Operations     | web3flutter.dev/api/skills/token-ops              |
+| NFT Development      | web3flutter.dev/api/skills/nft-dev                |
+| DeFi Patterns        | web3flutter.dev/api/skills/defi-patterns          |
+| Jupiter Aggregator   | web3flutter.dev/api/skills/jupiter-aggregator     |
+| Wallet UX            | web3flutter.dev/api/skills/wallet-ux              |
+| Tx Building          | web3flutter.dev/api/skills/transaction-building   |
+| Security             | web3flutter.dev/api/skills/flutter-web3-security  |
+| Dartus (Walrus)      | web3flutter.dev/api/skills/dartus                 |
+| bls_dart             | web3flutter.dev/api/skills/bls-dart               |
+| light_sdk (ZK)       | web3flutter.dev/api/skills/light-sdk              |
+| tld_parser (ANS)     | web3flutter.dev/api/skills/tld-parser             |
+| Stake Program        | web3flutter.dev/api/skills/stake-program          |
 
 > AGENT: Fetch only the skill URLs relevant to the task.
 
@@ -33,16 +46,17 @@ globs: "**/*.dart"
 
 \`\`\`
 Any Solana Flutter app → \`solana\` (always needed)
-├── Anchor programs? → also \`coral_xyz\`
-├── Raw programs? → also \`borsh\`
-├── Mobile signing? → also \`solana_mobile_client\`
-└── EVM chains → \`web3dart\`
+├── Anchor/Quasar programs? → + coral_xyz
+├── Raw programs? → + borsh
+├── Mobile signing? → + solana_mobile_client
+├── DEX swaps? → + jupiter-aggregator
+├── ZK Compression? → + light_sdk
+├── Domain names? → + tld_parser
+└── Walrus storage? → + dartus + bls_dart
 \`\`\`
 
-## Critical Rules
-## Common Errors + Fixes (table)
-## Architecture Patterns
-## Program IDs you'll use often...`;
+## Critical Rules · Common Errors · Architecture
+## Security · Program IDs · Quick Reference...`;
 
 // No wave path needed here anymore
 
@@ -73,9 +87,7 @@ export default function SkillsHero() {
 
     const handleCopy = useCallback(async () => {
         try {
-            const response = await fetch("/skills.md");
-            const text = await response.text();
-            await navigator.clipboard.writeText(text);
+            await navigator.clipboard.writeText("https://web3flutter.dev/skills.md");
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         } catch {
@@ -155,12 +167,12 @@ export default function SkillsHero() {
                                             {copied ? (
                                                 <>
                                                     <Check size={14} />
-                                                    Copied!
+                                                    Copied URL!
                                                 </>
                                             ) : (
                                                 <>
                                                     <Copy size={14} />
-                                                    Copy
+                                                    Copy Link
                                                 </>
                                             )}
                                         </button>

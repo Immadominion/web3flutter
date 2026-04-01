@@ -77,9 +77,7 @@ export default function Navbar() {
 
     const handleQuickCopy = useCallback(async () => {
         try {
-            const response = await fetch("/skills.md");
-            const text = await response.text();
-            await navigator.clipboard.writeText(text);
+            await navigator.clipboard.writeText("https://web3flutter.dev/skills.md");
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         } catch {

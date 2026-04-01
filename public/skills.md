@@ -5,7 +5,7 @@
 
 ---
 
-description: "Index skill file for Web3 Flutter development on Solana. References deep-dive skill files for each package and pattern."
+description: "Index skill file for Web3 Flutter development on Solana. References 16 deep-dive skill files covering every package and pattern in the ecosystem."
 
 globs: "**/*.dart"
 
@@ -19,16 +19,56 @@ This is the **index skill**. It gives you the big picture — which packages exi
 
 Each skill file below covers one topic in exhaustive detail — API usage, gotchas, code examples, and common mistakes.
 
+### Core SDK
+
 | Skill | What It Covers | URL |
 |-------|---------------|-----|
-| Solana Package | RPC client, keypairs, transactions, programs | `https://web3flutter.dev/api/skills/solana-package` |
+| Solana Core SDK | RPC client, keypairs, transactions, programs | `https://web3flutter.dev/api/skills/solana-core` |
+| Solana Package | High-level SDK wrapper, convenience APIs | `https://web3flutter.dev/api/skills/solana-package` |
 | Borsh | Binary serialization & deserialization | `https://web3flutter.dev/api/skills/borsh` |
-| coral_xyz | Universal Dart client for Solana programs | `https://web3flutter.dev/api/skills/coral-xyz` |
-| Solana Mobile | MWA, Seed Vault, dApp Store (Android) | `https://web3flutter.dev/api/skills/solana-mobile` |
-| Token Operations | SPL tokens, ATAs, Token-2022, transfers | `https://web3flutter.dev/api/skills/token-ops` |
-| NFT Development | Metaplex, cNFTs, metadata, display | `https://web3flutter.dev/api/skills/nft-dev` |
-| DeFi Patterns | Swaps, staking, liquidity, Jupiter | `https://web3flutter.dev/api/skills/defi-patterns` |
-| Wallet UX | Connection flows, signing UI, errors | `https://web3flutter.dev/api/skills/wallet-ux` |
+| coral_xyz | Universal Dart client for Anchor/Quasar/Pinocchio programs via IDL | `https://web3flutter.dev/api/skills/coral-xyz` |
+| Transaction Building | Construct, sign, simulate, and send transactions | `https://web3flutter.dev/api/skills/transaction-building` |
+
+### Mobile
+
+| Skill | What It Covers | URL |
+|-------|---------------|-----|
+| Solana Mobile Client | Mobile Wallet Adapter for dApps (authorize, sign, send) | `https://web3flutter.dev/api/skills/solana-mobile-client` |
+| Solana Mobile Wallet | Build a wallet app with MWA support | `https://web3flutter.dev/api/skills/solana-mobile-wallet` |
+| Solana Seed Vault | Hardware key management on Saga/Seeker devices | `https://web3flutter.dev/api/skills/solana-seed-vault` |
+
+### Tokens & NFTs
+
+| Skill | What It Covers | URL |
+|-------|---------------|-----|
+| SPL Token | Token operations — mint, transfer, ATAs, Token-2022 | `https://web3flutter.dev/api/skills/spl-token` |
+| Token Operations | High-level patterns for SPL tokens and Token-2022 extensions | `https://web3flutter.dev/api/skills/token-ops` |
+| Metaplex NFT | Token Metadata, Master Editions, cNFTs, display | `https://web3flutter.dev/api/skills/metaplex-nft` |
+| NFT Development | End-to-end NFT workflows — mint, transfer, display | `https://web3flutter.dev/api/skills/nft-dev` |
+
+### DeFi & Staking
+
+| Skill | What It Covers | URL |
+|-------|---------------|-----|
+| DeFi Patterns | Swaps, staking, liquidity provision patterns | `https://web3flutter.dev/api/skills/defi-patterns` |
+| Jupiter Aggregator | DEX swap & price API integration | `https://web3flutter.dev/api/skills/jupiter-aggregator` |
+| Stake Program | Native SOL staking — delegate, deactivate, withdraw | `https://web3flutter.dev/api/skills/stake-program` |
+
+### UX & Security
+
+| Skill | What It Covers | URL |
+|-------|---------------|-----|
+| Wallet UX | Connection flows, signing UI, error handling | `https://web3flutter.dev/api/skills/wallet-ux` |
+| Security | Mobile wallet & dApp security best practices | `https://web3flutter.dev/api/skills/flutter-web3-security` |
+
+### Storage & Naming
+
+| Skill | What It Covers | URL |
+|-------|---------------|-----|
+| Dartus (Walrus) | Walrus decentralized storage SDK — upload, read, certify | `https://web3flutter.dev/api/skills/dartus` |
+| bls_dart | Native BLS12-381 signatures for Walrus certification | `https://web3flutter.dev/api/skills/bls-dart` |
+| light_sdk | ZK Compression — compressed accounts at 1/1000th cost | `https://web3flutter.dev/api/skills/light-sdk` |
+| tld_parser | AllDomains ANS — resolve .sol/.abc domains to wallets | `https://web3flutter.dev/api/skills/tld-parser` |
 
 > **AGENT INSTRUCTION**: When the user's task involves a specific topic above, fetch that skill URL to get full implementation details. You do NOT need to fetch all of them — only the ones relevant to the current task.
 
@@ -40,19 +80,30 @@ Each skill file below covers one topic in exhaustive detail — API usage, gotch
 |---------|---------|---------|
 | `solana` | Full Solana SDK — keypairs, transactions, RPC | solana ^0.31.0 |
 | `solana_mobile_client` | MWA, Seed Vault, dApp signing (Saga/Seeker) | solana_mobile_client ^0.3.0 |
+| `solana_mobile_wallet` | Build MWA-compatible wallet apps | solana_mobile_wallet ^0.1.0 |
 | `borsh` / `borsh_annotation` | Borsh serialization code generator + runtime types | borsh ^0.3.0 / borsh_annotation ^0.3.1 |
 | `coral_xyz` | Universal Solana program client (IDL-driven) | coral_xyz ^0.1.0 |
+| `dartus` | Walrus decentralized storage SDK | dartus ^0.1.0 |
+| `bls_dart` | BLS12-381 for Walrus blob certification | bls_dart ^0.1.0 |
+| `light_sdk` | ZK Compression — compressed accounts & state trees | light_sdk ^0.1.0 |
+| `tld_parser` | AllDomains ANS domain resolution | tld_parser ^0.1.0 |
 
 ### Decision Tree
 
 ```
 What are you building?
 ├── Any Solana Flutter app → `solana` (always needed)
-│   ├── Interacting with an Anchor program? → also `coral_xyz`
+│   ├── Interacting with an Anchor/Quasar program? → also `coral_xyz`
 │   ├── Interacting with a raw/Pinocchio program? → also `borsh` + `borsh_annotation`
 │   ├── Mobile wallet signing on Android? → also `solana_mobile_client`
-│   ├── SPL token transfers or balances? → `solana` has it built-in
-│   └── NFT display? → `solana` + HTTP calls to DAS API (Helius)
+│   ├── Building a wallet app? → also `solana_mobile_wallet`
+│   ├── SPL token transfers or balances? → `solana` has it built-in (or `spl-token` skill for advanced)
+│   ├── NFT display? → `solana` + HTTP calls to DAS API (Helius)
+│   ├── DEX swaps? → Jupiter Aggregator REST API
+│   ├── Native SOL staking? → Stake Program instructions
+│   ├── ZK Compression? → `light_sdk`
+│   ├── Domain name resolution? → `tld_parser`
+│   └── Decentralized storage (Walrus)? → `dartus` + `bls_dart`
 └── EVM chains (Ethereum, Polygon) → `web3dart` (not covered here)
 ```
 
@@ -112,6 +163,7 @@ Each token type (mint) needs a separate Associated Token Account (ATA). Creating
 - Use `flutter_secure_storage` with biometric protection for mnemonics
 - Request only necessary scopes in MWA authorization
 - Validate all on-chain data — accounts can be spoofed if you don't check the owner program
+- See the [Security skill file](https://web3flutter.dev/api/skills/flutter-web3-security) for a comprehensive checklist
 
 ## Quick Reference
 
@@ -133,6 +185,7 @@ Each token type (mint) needs a separate Associated Token Account (ATA). Creating
 | Memo Program | `MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr` |
 | Metaplex Metadata | `metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s` |
 | Bubblegum (cNFTs) | `BGUMAp9Gq7iTEuizy4pqaxsTyUCBK68MDfK752saRPUY` |
+| Stake Program | `Stake11111111111111111111111111111111111111` |
 
 ---
 

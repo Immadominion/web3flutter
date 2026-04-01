@@ -11,6 +11,20 @@ const ALLOWED_SLUGS = new Set([
     "nft-dev",
     "defi-patterns",
     "wallet-ux",
+    "bls-dart",
+    "dartus",
+    "flutter-web3-security",
+    "jupiter-aggregator",
+    "light-sdk",
+    "metaplex-nft",
+    "solana-core",
+    "solana-mobile-client",
+    "solana-mobile-wallet",
+    "solana-seed-vault",
+    "spl-token",
+    "stake-program",
+    "tld-parser",
+    "transaction-building",
 ]);
 
 export async function GET(
