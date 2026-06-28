@@ -15,6 +15,14 @@ globs: "**/*.dart"
 
 This is the **index skill**. It gives you the big picture — which packages exist, when to use them, and how they fit together. For deep implementation details, fetch the specific skill file you need from the URLs below. Only fetch what's relevant to the current task.
 
+## Installable Agent Skill (Claude Code, Codex)
+
+This whole skill set is also packaged as an installable agent skill in the standard kit shape: a `skill/SKILL.md` router that progressively loads focused topic files, so an agent reads only what the task needs.
+
+- Repo: https://github.com/Immadominion/solana-flutter-skill
+- Install: `git clone https://github.com/Immadominion/solana-flutter-skill && cd solana-flutter-skill && ./install.sh`
+- Submitted to the Solana AI Kit skill bounty: https://github.com/solanabr/skill-bounty/pull/86
+
 ## Deep-Dive Skill Files
 
 Each skill file below covers one topic in exhaustive detail — API usage, gotchas, code examples, and common mistakes.
